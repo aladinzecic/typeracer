@@ -11,6 +11,7 @@ function App() {
   const [counter, setCounter] = useState(1);
   const [red, setRed] = useState(false);
   const [lastGood, setLastGood] = useState(-1);
+  const [stop, setStop] = useState(false);
   const [showDelayedContent, setShowDelayedContent] = useState(false);
 
   useEffect(() => {
@@ -51,13 +52,15 @@ function App() {
         <>
           <header ref={containerRef}>{generate()}</header>
           <input
+            autoFocus
             disabled={!isGameOn}
             type="text"
             ref={inputRef}
             className="input"
             onChange={(e) => {
               e.preventDefault();
-              console.log(text);
+              console.log(counter);
+              console.log(lastGood);
               const newText = e.target.value;
               const containerElement = containerRef.current;
               const spanToChange = containerElement.querySelector(
@@ -65,7 +68,11 @@ function App() {
               );
               let last = e.target.value.charAt(e.target.value.length - 1);
               if (newText.length < text.length) {
-                setCounter(counter - 1);
+                if (sentence[counter - 2] == " "&& !red) {
+                  console.log("object");
+                } else {
+                  setCounter(counter - 1);
+                }
                 setText(text.slice(0, text.length - 1));
 
                 const spanToChangee = containerElement.querySelector(
@@ -74,8 +81,6 @@ function App() {
                 spanToChangee.className = "black";
               } else {
                 setText(e.target.value);
-                console.log(lastGood);
-                console.log(text.length);
                 if (
                   lastGood == text.length - 1 &&
                   sentence[counter - 1] == last &&
