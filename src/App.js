@@ -4,6 +4,7 @@ import json from "./Json/Json.json";
 import Timer from "./Timer/Timer";
 import Start from "./Start/Start";
 import { AppContext } from "./Context/AppContext";
+import Navbar from "./Navbar/Navbar";
 function App() {
   const inputRef = useRef(null);
   const containerRef = useRef(null);
@@ -63,6 +64,7 @@ function App() {
 
   return (
     <div className="App">
+      <Navbar/>
       <header ref={containerRef} style={{ filter: filterStyle }}>
         {generate()}
       </header>
