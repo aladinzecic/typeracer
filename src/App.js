@@ -5,19 +5,21 @@ import Timer from "./Timer/Timer";
 import Start from "./Start/Start";
 import { AppContext } from "./Context/AppContext";
 function App() {
+  const inputRef = useRef(null);
+  const containerRef = useRef(null);
   const { isGameOn, setIsGameOn } = useContext(AppContext);
   const [text, setText] = useState("");
   const [sentence, setSentence] = useState("");
   const [counter, setCounter] = useState(1);
   const [red, setRed] = useState(false);
   const [lastGood, setLastGood] = useState(-1);
-  const [stop, setStop] = useState(false);
-  const [showDelayedContent, setShowDelayedContent] = useState(false);
+  const [filterStyle, setFilterStyle] = useState("blur(5px)");
 
   useEffect(() => {
     if (isGameOn) {
       const timeoutId = setTimeout(() => {
-        setShowDelayedContent(true);
+        setFilterStyle("none");
+        inputRef.current.focus();
       }, 3000);
       const endId = setTimeout(() => {
         setIsGameOn(false);
@@ -33,8 +35,23 @@ function App() {
   useEffect(() => {
     setSentence(json[random()].text);
   }, []);
+  
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // Check if the clicked element is outside the input
+      if (inputRef.current && !inputRef.current.contains(event.target)) {
+        inputRef.current.focus();
+      }
+    };
 
-  const containerRef = useRef(null);
+    // Attach the event listener to the document
+    document.addEventListener("click", handleClickOutside);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
   function generate() {
     const letters = sentence.split("");
     const spans = letters.map((slovo, index) => (
@@ -44,74 +61,76 @@ function App() {
     ));
     return spans;
   }
-  const inputRef = useRef(null);
 
   return (
     <div className="App">
-      {showDelayedContent ? (
-        <>
-          <header ref={containerRef}>{generate()}</header>
-          <input
-            autoFocus
-            disabled={!isGameOn}
-            type="text"
-            ref={inputRef}
-            className="input"
-            onChange={(e) => {
-              e.preventDefault();
-              console.log(counter);
-              console.log(lastGood);
-              const newText = e.target.value;
-              const containerElement = containerRef.current;
-              const spanToChange = containerElement.querySelector(
-                `span:nth-child(${counter})`
-              );
-              let last = e.target.value.charAt(e.target.value.length - 1);
-              if (newText.length < text.length) {
-                if (sentence[counter - 2] == " "&& !red) {
-                  console.log("object");
-                } else {
-                  setCounter(counter - 1);
-                }
-                setText(text.slice(0, text.length - 1));
+      <header ref={containerRef} style={{ filter: filterStyle }}>
+        {generate()}
+      </header>
+      <input
+        autoFocus
+        disabled={!isGameOn}
+        type="text"
+        ref={inputRef}
+        className="input"
+        onChange={(e) => {
+          e.preventDefault();
+          console.log(counter);
+          console.log(lastGood);
+          const newText = e.target.value;
+          const containerElement = containerRef.current;
+          const spanToChange = containerElement.querySelector(
+            `span:nth-child(${counter})`
+          );
+          let last = e.target.value.charAt(e.target.value.length - 1);
+          if (newText.length < text.length) {
+            const spanToChangee = containerElement.querySelector(
+              `span:nth-child(${counter - 1})` //jer ti indexiranje kod spanova krece od 1 a text od 0
+            );
+            if (sentence[counter - 2] == " " && !red) {
+              console.log("object");
+            } else if (sentence[counter - 2] == " " && red) {
+              spanToChangee.style.border = "0px white";
+              console.log("respect");
+              setCounter(counter - 1);
+            } else {
+              setCounter(counter - 1);
+            }
+            setText(text.slice(0, text.length - 1));
 
-                const spanToChangee = containerElement.querySelector(
-                  `span:nth-child(${counter - 1})` //jer ti indexiranje kod spanova krece od 1 a text od 0
-                );
-                spanToChangee.className = "black";
+            spanToChangee.className = "black";
+          } else {
+            setText(e.target.value);
+            if (
+              lastGood == text.length - 1 &&
+              sentence[counter - 1] == last &&
+              red
+            ) {
+              setRed(false);
+              spanToChange.className = "green";
+              setCounter(counter + 1);
+            } else if (sentence[counter - 1] == last) {
+              if (red) {
+                spanToChange.className = "red";
               } else {
-                setText(e.target.value);
-                if (
-                  lastGood == text.length - 1 &&
-                  sentence[counter - 1] == last &&
-                  red
-                ) {
-                  setRed(false);
-                  spanToChange.className = "green";
-                  setCounter(counter + 1);
-                } else if (sentence[counter - 1] == last) {
-                  if (red) {
-                    spanToChange.className = "red";
-                  } else {
-                    spanToChange.className = "green";
-                    setLastGood(counter - 1);
-                  }
-                  setCounter(counter + 1);
-                } else {
-                  spanToChange.className = "red";
-                  setRed(true);
-                  setCounter(counter + 1);
-                }
+                spanToChange.className = "green";
+                setLastGood(counter - 1);
               }
-            }}
-          ></input>
-          <Timer time={120} />
-        </>
-      ) : (
-        <>
-          <Start />
-        </>
-      )}
+              setCounter(counter + 1);
+            } else {
+              if (sentence[counter - 1] == " ") {
+                spanToChange.style.border = "1px solid red";
+              }
+              spanToChange.className = "red";
+              setRed(true);
+              setCounter(counter + 1);
+            }
+          }
+        }}
+      ></input>
+      {/* <Timer time={120} /> */}
+
+      <Start />
     </div>
   );
 }

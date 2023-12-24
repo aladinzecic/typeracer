@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  height: 100vh;
 }
 
 .App-logo {
@@ -9,6 +10,13 @@
 header {
   width: 80%;
   margin-left: 10%;
+margin-top: 4vh;
+}
+.span{
+  border : 1px solid red;
+}
+.normalSpan{
+  border : 0;
 }
 .green {
   color: white;
