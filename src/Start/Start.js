@@ -1,23 +1,26 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { AppContext } from "../Context/AppContext";
 import Timer from "../Timer/Timer";
 import "./Start.css";
 export default function Start() {
   const { isGameOn, setIsGameOn } = useContext(AppContext);
+  const [timerOn, setTimerOn] = useState(false);
 
   return (
     <div className="preStart">
-      {!isGameOn ? (
+      {!isGameOn&&!timerOn && (
         <button
           onClick={() => {
-            setIsGameOn(true);
+            setTimerOn(true);
+            setTimeout(() => {
+              setIsGameOn(true);
+            }, 3000);
           }}
         >
           Start a race
         </button>
-      ) : (
-        <Timer time={3} />
       )}
+      {timerOn && <Timer time={3} />}
     </div>
   );
 }

@@ -17,10 +17,9 @@ function App() {
 
   useEffect(() => {
     if (isGameOn) {
-      const timeoutId = setTimeout(() => {
-        setFilterStyle("none");
-        inputRef.current.focus();
-      }, 3000);
+      setFilterStyle("none");
+      inputRef.current.focus();
+
       const endId = setTimeout(() => {
         setIsGameOn(false);
       }, 123000);
@@ -35,7 +34,7 @@ function App() {
   useEffect(() => {
     setSentence(json[random()].text);
   }, []);
-  
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       // Check if the clicked element is outside the input
@@ -128,9 +127,8 @@ function App() {
           }
         }}
       ></input>
-      {/* <Timer time={120} /> */}
 
-      <Start />
+      {isGameOn ? <Timer time={120} /> : <Start />}
     </div>
   );
 }

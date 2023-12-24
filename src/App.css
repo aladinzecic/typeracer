@@ -1,6 +1,7 @@
 .App {
   text-align: center;
   height: 100vh;
+  background-color: #003950;
 }
 
 .App-logo {
@@ -10,33 +11,30 @@
 header {
   width: 80%;
   margin-left: 10%;
-margin-top: 4vh;
+  padding-top: 4vh;
 }
-.span{
-  border : 1px solid red;
+.span {
+  border: 1px solid red;
 }
-.normalSpan{
-  border : 0;
+.normalSpan {
+  border: 0;
 }
 .green {
   color: white;
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
-    1px 1px 0 #000;
-  color: black;
-  font-size: 48px;
+
+  font-size: 40px;
+  letter-spacing: 2px;
 }
 .black {
-  color: white;
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
-    1px 1px 0 #000;
-  /* color: black; */
-  font-size: 48px;
+  color: #5cdbea;
+
+  font-size: 40px;
+  letter-spacing: 2px;
 }
 .red {
   color: white;
-  text-shadow: -1px -1px 0 red, 1px -1px 0 red, -1px 1px 0 red, 1px 1px 0 red;
   color: red;
-  font-size: 48px;
+  font-size: 40px;
 }
 .input {
   opacity: 0;
