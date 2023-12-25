@@ -1,7 +1,9 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import "./Timer.css";
+import { AppContext } from "../Context/AppContext";
 export default function Timer({ time }) {
   const [secondsRemaining, setSecondsRemaining] = useState(time);
+  const {loadTimerOn}=useContext(AppContext)
   const intervalIdRef = useRef(null);
   useEffect(() => {
     intervalIdRef.current = setInterval(() => {
@@ -19,5 +21,5 @@ export default function Timer({ time }) {
     return () => clearInterval(intervalIdRef.current);
   }, []);
 
-  return <div className="timer">{secondsRemaining}</div>;
+  return <div className={loadTimerOn?'load-timer':'timer'}>{secondsRemaining}</div>;
 }

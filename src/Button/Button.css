@@ -1,0 +1,25 @@
+.button {
+  background-color: #095574;
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  margin: auto;
+  cursor: pointer;
+}
+.selected{
+    background-color: #095574;
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    margin: auto;
+    border: 1px solid white;
+    cursor: pointer;
+}

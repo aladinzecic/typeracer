@@ -5,10 +5,11 @@ import Timer from "./Timer/Timer";
 import Start from "./Start/Start";
 import { AppContext } from "./Context/AppContext";
 import Navbar from "./Navbar/Navbar";
+import Button from "./Button/Button";
 function App() {
   const inputRef = useRef(null);
   const containerRef = useRef(null);
-  const { isGameOn, setIsGameOn } = useContext(AppContext);
+  const { isGameOn, setIsGameOn, gameTime,setLoadTimerOn } = useContext(AppContext);
   const [text, setText] = useState("");
   const [sentence, setSentence] = useState("");
   const [counter, setCounter] = useState(1);
@@ -18,12 +19,13 @@ function App() {
 
   useEffect(() => {
     if (isGameOn) {
+      setLoadTimerOn(false);
       setFilterStyle("none");
       inputRef.current.focus();
 
       const endId = setTimeout(() => {
         setIsGameOn(false);
-      }, 123000);
+      }, gameTime * 1000);
       return () => clearTimeout(endId);
     }
   }, [isGameOn]);
@@ -64,10 +66,11 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar/>
+      <Navbar />
       <header ref={containerRef} style={{ filter: filterStyle }}>
         {generate()}
       </header>
+      {isGameOn ? <Timer time={gameTime} /> : <Start />}
       <input
         autoFocus
         disabled={!isGameOn}
@@ -129,8 +132,11 @@ function App() {
           }
         }}
       ></input>
-
-      {isGameOn ? <Timer time={120} /> : <Start />}
+      <div className="buttons">
+        <Button time={30} />
+        <Button time={60} />
+        <Button time={120} />
+      </div>
     </div>
   );
 }

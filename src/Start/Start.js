@@ -3,15 +3,14 @@ import { AppContext } from "../Context/AppContext";
 import Timer from "../Timer/Timer";
 import "./Start.css";
 export default function Start() {
-  const { isGameOn, setIsGameOn } = useContext(AppContext);
-  const [timerOn, setTimerOn] = useState(false);
+  const { isGameOn, setIsGameOn,loadTimerOn,setLoadTimerOn } = useContext(AppContext);
 
   return (
     <div className="preStart">
-      {!isGameOn&&!timerOn && (
+      {!isGameOn&&!loadTimerOn && (
         <button
           onClick={() => {
-            setTimerOn(true);
+            setLoadTimerOn(true);
             setTimeout(() => {
               setIsGameOn(true);
             }, 3000);
@@ -20,7 +19,7 @@ export default function Start() {
           Start a race
         </button>
       )}
-      {timerOn && <Timer time={3} />}
+      {loadTimerOn && <Timer time={3} />}
     </div>
   );
 }

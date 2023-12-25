@@ -3,6 +3,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: -25vh;
+  z-index: 10;
+  position: relative;
 }
 
 button {

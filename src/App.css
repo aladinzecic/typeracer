@@ -57,8 +57,9 @@ header {
   outline: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.buttons{
+  display: flex;
+  justify-content: space-around;
+  width: 20%;
+  margin: auto;
 }
