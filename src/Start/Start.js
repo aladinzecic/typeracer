@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext} from "react";
 import { AppContext } from "../Context/AppContext";
 import Timer from "../Timer/Timer";
 import "./Start.css";

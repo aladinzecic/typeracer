@@ -1,7 +1,9 @@
+
 .App {
   text-align: center;
   height: 100vh;
   background-color: #003950;
+
 }
 
 .App-logo {
@@ -11,7 +13,7 @@
 header {
   width: 80%;
   margin-left: 10%;
-  padding-top: 4vh;
+  margin-top: 8vh;
 }
 .span {
   border: 1px solid red;
@@ -32,9 +34,9 @@ header {
   letter-spacing: 2px;
 }
 .red {
-  color: white;
   color: red;
   font-size: 40px;
+  letter-spacing: 2px;
 }
 .input {
   opacity: 0;
@@ -50,6 +52,8 @@ header {
   font-family: "Anton";
   padding-left: 20px;
   margin-top: 100px;
+  z-index: 0;
+  margin-top: -5vh;
 }
 
 .input:focus {
@@ -57,9 +61,30 @@ header {
   outline: none;
 }
 
-.buttons{
+.buttons {
   display: flex;
   justify-content: space-around;
   width: 20%;
   margin: auto;
+  margin-top: -5vh;
+  z-index: 12;
+  position: relative;
+}
+
+.wpm-timer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.wpm-timer .wpm-div h1 {
+  margin: auto;
+  letter-spacing: 2px;
+
+  color: #fff;
+}
+.wpm-div {
+  width: 120px;
+  border-radius: 8px;
+  background-color: #095574;
+  margin: 10vh auto;
 }

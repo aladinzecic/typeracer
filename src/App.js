@@ -9,19 +9,34 @@ import Button from "./Button/Button";
 function App() {
   const inputRef = useRef(null);
   const containerRef = useRef(null);
-  const { isGameOn, setIsGameOn, gameTime,setLoadTimerOn } = useContext(AppContext);
+  const {
+    isGameOn,
+    setIsGameOn,
+    gameTime,
+    setLoadTimerOn,
+    startTime,
+    secondsRemaining,
+  } = useContext(AppContext);
   const [text, setText] = useState("");
   const [sentence, setSentence] = useState("");
   const [counter, setCounter] = useState(1);
   const [red, setRed] = useState(false);
   const [lastGood, setLastGood] = useState(-1);
   const [filterStyle, setFilterStyle] = useState("blur(5px)");
+  const [wpm, setWpm] = useState(0);
+  const [refreshWpm, setRefreshWpm] = useState(false);
 
   useEffect(() => {
     if (isGameOn) {
+
       setLoadTimerOn(false);
       setFilterStyle("none");
       inputRef.current.focus();
+      inputRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+        inline: "start",
+      });
 
       const endId = setTimeout(() => {
         setIsGameOn(false);
@@ -48,12 +63,25 @@ function App() {
 
     // Attach the event listener to the document
     document.addEventListener("click", handleClickOutside);
-
     // Cleanup the event listener on component unmount
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
+  useEffect(() => {
+    if (refreshWpm)
+      setWpm(
+        Math.floor(lastGood / ((5 * (startTime - secondsRemaining)) / 60))
+      );
+    console.log(lastGood);
+    console.log(startTime);
+    console.log(gameTime);
+  }, [refreshWpm]);
+
+  useEffect(() => {
+    if (counter % 5 === 0) setRefreshWpm(true);
+    else setRefreshWpm(false);
+  }, [counter]);
   function generate() {
     const letters = sentence.split("");
     const spans = letters.map((slovo, index) => (
@@ -70,7 +98,16 @@ function App() {
       <header ref={containerRef} style={{ filter: filterStyle }}>
         {generate()}
       </header>
-      {isGameOn ? <Timer time={gameTime} /> : <Start />}
+      <div className="wpm-timer">
+        {isGameOn ? (
+          <div className="wpm-div">
+            <h1>{wpm} wpm</h1>
+          </div>
+        ) : (
+          <></>
+        )}
+        {isGameOn ? <Timer time={gameTime} /> : <Start />}
+      </div>
       <input
         autoFocus
         disabled={!isGameOn}

@@ -2,8 +2,8 @@ import React, { useEffect, useState, useRef, useContext } from "react";
 import "./Timer.css";
 import { AppContext } from "../Context/AppContext";
 export default function Timer({ time }) {
-  const [secondsRemaining, setSecondsRemaining] = useState(time);
-  const {loadTimerOn}=useContext(AppContext)
+  const { loadTimerOn, secondsRemaining, setSecondsRemaining } =
+    useContext(AppContext);
   const intervalIdRef = useRef(null);
   useEffect(() => {
     intervalIdRef.current = setInterval(() => {
@@ -20,6 +20,12 @@ export default function Timer({ time }) {
     // Clear the interval when the component is unmounted
     return () => clearInterval(intervalIdRef.current);
   }, []);
-
-  return <div className={loadTimerOn?'load-timer':'timer'}>{secondsRemaining}</div>;
+  useEffect(() => {
+    setSecondsRemaining(time);
+  }, []);
+  return (
+    <div className={loadTimerOn ? "load-timer" : "timer"}>
+      {secondsRemaining}
+    </div>
+  );
 }
