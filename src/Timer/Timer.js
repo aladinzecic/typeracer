@@ -2,8 +2,13 @@ import React, { useEffect, useState, useRef, useContext } from "react";
 import "./Timer.css";
 import { AppContext } from "../Context/AppContext";
 export default function Timer({ time }) {
-  const { loadTimerOn, secondsRemaining, setSecondsRemaining } =
-    useContext(AppContext);
+  const {
+    loadTimerOn,
+    secondsRemaining,
+    setSecondsRemaining,
+    setIsGameOver,
+    isGameOver,
+  } = useContext(AppContext);
   const intervalIdRef = useRef(null);
   useEffect(() => {
     intervalIdRef.current = setInterval(() => {
@@ -12,6 +17,8 @@ export default function Timer({ time }) {
           return prevSeconds - 1;
         } else {
           clearInterval(intervalIdRef.current);
+          setIsGameOver(true);
+          console.log(isGameOver);
           return 0; // Ensure that the state is set to 0 when reaching 0 seconds
         }
       });

@@ -7,6 +7,7 @@ function ContextProvider({ children }) {
   const [startTime, setStartTime] = useState(30);
   const [loadTimerOn, setLoadTimerOn] = useState(false);
   const [secondsRemaining, setSecondsRemaining] = useState(-1);
+  const [isGameOver, setIsGameOver] = useState(false);
 
   const values = {
     isGameOn,
@@ -18,7 +19,9 @@ function ContextProvider({ children }) {
     startTime,
     setStartTime,
     secondsRemaining,
-    setSecondsRemaining
+    setSecondsRemaining,
+    isGameOver,
+    setIsGameOver,
   };
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
 }

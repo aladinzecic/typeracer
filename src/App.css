@@ -66,7 +66,7 @@ header {
   justify-content: space-around;
   width: 20%;
   margin: auto;
-  margin-top: -5vh;
+  margin-top: 5vh;
   z-index: 12;
   position: relative;
 }
@@ -87,4 +87,18 @@ header {
   border-radius: 8px;
   background-color: #095574;
   margin: 10vh auto;
+}
+
+.x{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  border-radius: 50%;
+  background-color:#003950;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
 }
