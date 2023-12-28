@@ -119,12 +119,14 @@ function App() {
     },
     overlay: { zIndex: 1000 },
   };
-
+function refreshPage() {
+    window.location.reload(false);
+  }
   return (
     <div className="App">
       <Navbar />
       <Modal isOpen={isGameOver} style={customStyles}>
-        <div className="x">x</div>
+        <div className="x" onClick={()=>{setIsGameOver(false);refreshPage()}}>x</div>
         <Box text={"wpm"} num={wpm} />
         <Box
           text={"acc"}
