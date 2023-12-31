@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useContext } from "react";
+import React, { useEffect, useRef, useContext } from "react";
 import "./Timer.css";
 import { AppContext } from "../Context/AppContext";
 export default function Timer({ time }) {
@@ -25,10 +25,11 @@ export default function Timer({ time }) {
     }, 1000);
 
     // Clear the interval when the component is unmounted
-    return () => clearInterval(intervalIdRef.current);
+    return () => clearInterval(intervalIdRef.current);// eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     setSecondsRemaining(time);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div className={loadTimerOn ? "load-timer" : "timer"}>

@@ -4,7 +4,7 @@ import "./Navbar.css"
 export default function Navbar() {
   return (
     <div className='nav'>
-      <img src={logo}></img>
+      <img src={logo} alt='img'></img>
       <h2>TYPERACER</h2>
     </div>
   )
