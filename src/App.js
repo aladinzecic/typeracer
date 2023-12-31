@@ -47,7 +47,7 @@ function App() {
         setIsGameOver(true)
       }, gameTime * 1000);
       return () => clearTimeout(endId);
-    }
+    }// eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isGameOn]);
   function random() {
     const broj = Math.floor(Math.random() * 29) + 1;
@@ -56,7 +56,7 @@ function App() {
   }
   useEffect(() => {
     setSentence(json[random()].text);
-    console.log(isGameOver);
+// eslint-disable-next-line react-hooks/exhaustive-deps    
   }, []);
 
   useEffect(() => {
@@ -82,6 +82,7 @@ function App() {
     console.log(lastGood);
     console.log(startTime);
     console.log(gameTime);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refreshWpm]);
 
   useEffect(() => {
@@ -100,12 +101,10 @@ function App() {
 
   const customStyles = {
     content: {
-      backgroundColor: "red",
       width: "70%",
       height: "70%",
       top: "50%",
-      backgroundColor: "#095574",
-      borderRadius: "28px",
+      backgroundColor: "#003950",
       left: "50%",
       right: "auto",
       bottom: "auto",
@@ -115,9 +114,11 @@ function App() {
       justifyContent: "space-around",
       alignItems: "center",
       flexWrap: "wrap",
-      position:'relative'
+      position:'relative',
+      border:"0px",
     },
-    overlay: { zIndex: 1000 },
+    overlay: { zIndex: 1000 ,     backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
   };
 function refreshPage() {
     window.location.reload(false);
@@ -169,9 +170,9 @@ function refreshPage() {
             const spanToChangee = containerElement.querySelector(
               `span:nth-child(${counter - 1})` //jer ti indexiranje kod spanova krece od 1 a text od 0
             );
-            if (sentence[counter - 2] == " " && !red) {
+            if (sentence[counter - 2] === " " && !red) {
               console.log("object");
-            } else if (sentence[counter - 2] == " " && red) {
+            } else if (sentence[counter - 2] === " " && red) {
               spanToChangee.style.border = "0px white";
               console.log("respect");
               setCounter(counter - 1);
@@ -184,14 +185,14 @@ function refreshPage() {
           } else {
             setText(e.target.value);
             if (
-              lastGood == text.length - 1 &&
-              sentence[counter - 1] == last &&
+              lastGood === text.length - 1 &&
+              sentence[counter - 1] === last &&
               red
             ) {
               setRed(false);
               spanToChange.className = "green";
               setCounter(counter + 1);
-            } else if (sentence[counter - 1] == last) {
+            } else if (sentence[counter - 1] === last) {
               if (red) {
                 spanToChange.className = "red";
                 setNumOfErr(numOfErr + 1);
@@ -201,7 +202,7 @@ function refreshPage() {
               }
               setCounter(counter + 1);
             } else {
-              if (sentence[counter - 1] == " ") {
+              if (sentence[counter - 1] === " ") {
                 spanToChange.style.border = "1px solid red";
                 setNumOfErr(numOfErr + 1);
               }

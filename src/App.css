@@ -94,12 +94,12 @@ header {
   top: 20px;
   right: 20px;
   border-radius: 50%;
-  background-color:#003950;
+  background-color:#fff;
   width: 30px;
   height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #fff;
+  color: #003950;
   cursor: pointer;
 }
