@@ -123,40 +123,8 @@ function App() {
 function refreshPage() {
     window.location.reload(false);
   }
-  return (
-    <div className="App">
-      <Navbar />
-      <Modal isOpen={isGameOver} style={customStyles}>
-        <div className="x" onClick={()=>{setIsGameOver(false);refreshPage()}}>x</div>
-        <Box text={"wpm"} num={wpm} />
-        <Box
-          text={"acc"}
-          num={`${Math.floor((counter / (counter + numOfErr)*100))}%`}
-        />
-        <Box text={"total"} num={counter} />
-        <Box text={"time"} num={startTime - secondsRemaining} />
-      </Modal>
-      <header ref={containerRef} style={{ filter: filterStyle }}>
-        {generate()}
-      </header>
-      <div className="wpm-timer">
-        {isGameOn ? (
-          <div className="wpm-div">
-            <h1>{wpm} wpm</h1>
-          </div>
-        ) : (
-          <></>
-        )}
-        {isGameOn ? <Timer time={gameTime} /> : <Start />}
-      </div>
-      <input
-        autoFocus
-        disabled={!isGameOn}
-        type="text"
-        ref={inputRef}
-        className="input"
-        onChange={(e) => {
-          e.preventDefault();
+  function inputLogic(e){
+    e.preventDefault();
           const newText = e.target.value;
           const containerElement = containerRef.current;
           const spanToChange = containerElement.querySelector(
@@ -210,6 +178,41 @@ function refreshPage() {
               setCounter(counter + 1);
             }
           }
+  }
+  return (
+    <div className="App">
+      <Navbar />
+      <Modal isOpen={isGameOver} style={customStyles}>
+        <div className="x" onClick={()=>{setIsGameOver(false);refreshPage()}}>x</div>
+        <Box text={"wpm"} num={wpm} />
+        <Box
+          text={"acc"}
+          num={`${Math.floor((counter / (counter + numOfErr)*100))}%`}
+        />
+        <Box text={"total"} num={counter} />
+        <Box text={"time"} num={startTime - secondsRemaining} />
+      </Modal>
+      <header ref={containerRef} style={{ filter: filterStyle }}>
+        {generate()}
+      </header>
+      <div className="wpm-timer">
+        {isGameOn ? (
+          <div className="wpm-div">
+            <h1>{wpm} wpm</h1>
+          </div>
+        ) : (
+          <></>
+        )}
+        {isGameOn ? <Timer time={gameTime} /> : <Start />}
+      </div>
+      <input
+        autoFocus
+        disabled={!isGameOn}
+        type="text"
+        ref={inputRef}
+        className="input"
+        onChange={(e) => {
+          inputLogic(e)
         }}
       ></input>
       <div className="buttons">
