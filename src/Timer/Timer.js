@@ -13,20 +13,23 @@ export default function Timer({ time }) {
   useEffect(() => {
     intervalIdRef.current = setInterval(() => {
       setSecondsRemaining((prevSeconds) => {
+        if (isGameOver) {
+          clearInterval(intervalIdRef.current);
+          return prevSeconds;
+        }
         if (prevSeconds > 0) {
           return prevSeconds - 1;
         } else {
           clearInterval(intervalIdRef.current);
           setIsGameOver(true);
-          console.log(isGameOver);
           return 0; // Ensure that the state is set to 0 when reaching 0 seconds
         }
       });
     }, 1000);
 
     // Clear the interval when the component is unmounted
-    return () => clearInterval(intervalIdRef.current);// eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    return () => clearInterval(intervalIdRef.current); // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isGameOver]);
   useEffect(() => {
     setSecondsRemaining(time);
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -157,15 +157,13 @@ function refreshPage() {
         className="input"
         onChange={(e) => {
           e.preventDefault();
-          console.log(counter);
-          console.log(lastGood);
           const newText = e.target.value;
           const containerElement = containerRef.current;
           const spanToChange = containerElement.querySelector(
             `span:nth-child(${counter})`
           );
           let last = e.target.value.charAt(e.target.value.length - 1);
-          if (counter + 1 === text.length && !red) setIsGameOver(true);
+          if (counter === sentence.length && !red) setIsGameOver(true);
           if (newText.length < text.length) {
             const spanToChangee = containerElement.querySelector(
               `span:nth-child(${counter - 1})` //jer ti indexiranje kod spanova krece od 1 a text od 0
