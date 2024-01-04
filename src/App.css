@@ -103,3 +103,15 @@ header {
   color: #003950;
   cursor: pointer;
 }
+.stats{
+  position: absolute;
+  top: 10px;
+  font-size: 18px;
+  margin: auto;
+color:#fff;
+
+}
+.stats-dropdown{
+  margin-top: 50px;
+  width: 100%;
+}

@@ -16,3 +16,12 @@
     margin-left: 20px;
     padding-top: 10px;
 }
+.nav h3{
+    font-family: 'Anton';
+    color: #5cdbea;
+    letter-spacing: 3px;
+position: absolute;
+right: 100px;
+    padding-top: 10px;
+    cursor: pointer;
+}
