@@ -24,6 +24,7 @@ function App() {
     areStatsOpen,
     setAreStatsOpen,
   } = useContext(AppContext);
+  const [generatedItems, setGeneratedItems] = useState([]);
   const [text, setText] = useState("");
   const [sentence, setSentence] = useState("");
   const [counter, setCounter] = useState(1);
@@ -57,6 +58,7 @@ function App() {
         setStatistics([...statistics, [wpm, startTime - secondsRemaining]]);
       }
       setNumOfGames(numOfGames + 1);
+      setFilterStyle("blur(5px)");
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -67,9 +69,12 @@ function App() {
   }
   useEffect(() => {
     setSentence(json[random()].text);
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  useEffect(() => {
+    setGeneratedItems(generate());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sentence]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -99,6 +104,7 @@ function App() {
     if (counter % 5 === 0) setRefreshWpm(true);
     else setRefreshWpm(false);
   }, [counter]);
+
   function generate() {
     const letters = sentence.split("");
     const spans = letters.map((slovo, index) => (
@@ -108,7 +114,22 @@ function App() {
     ));
     return spans;
   }
-
+  
+  function Delete(){
+    const containerElement = containerRef.current;
+    if (containerElement) {
+      // Get all child elements inside the container
+      const childElements = containerElement.querySelectorAll('*');
+    
+      // Iterate through each child element and update its class
+      childElements.forEach((child) => {
+        child.classList.remove('green'); // Remove any previous classes
+        child.classList.remove('red'); // Remove any previous classes
+        child.classList.add('black'); // Add the new class "black"
+      });
+  }
+  
+  }
   const customStyles = {
     content: {
       width: "70%",
@@ -214,6 +235,16 @@ function App() {
           className="x"
           onClick={() => {
             setIsGameOver(false);
+            setText("");
+            setCounter(1);
+            setRed(false);
+            setLastGood(-1);
+            setWpm(0);
+            setRefreshWpm(false);
+            setNumOfErr(0);
+            Delete()
+            setSentence(json[random()].text);
+
           }}
         >
           x
@@ -241,17 +272,19 @@ function App() {
           <h2>time</h2>
         </div>
         <div className="stats">YOUR STATS</div>
-        <div className="stats-dropdown">{statistics?.map((element,index) => (
-          <StatBox
-            key={index}
-            numOfGames={index+1}
-            wpm={element[0]}
-            time={element[1]}
-          ></StatBox>
-        ))}</div>
+        <div className="stats-dropdown">
+          {statistics?.map((element, index) => (
+            <StatBox
+              key={index}
+              numOfGames={index + 1}
+              wpm={element[0]}
+              time={element[1]}
+            ></StatBox>
+          ))}
+        </div>
       </Modal>
       <header ref={containerRef} style={{ filter: filterStyle }}>
-        {generate()}
+        {generatedItems};
       </header>
       <div className="wpm-timer">
         {isGameOn ? (
